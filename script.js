@@ -66,6 +66,14 @@ cells.forEach(cell => {
   });
 });
 
+function startNewGame() {
+    isGameActive = true;
+    statusEl.textContent = `Choose a player!`;
+    playCells = Array(9).fill('');
+    cells.forEach(cell => cell.textContent = '');
+    overlayEl.classList.remove('hidden');
+}
+
 
 
 function autoRestart() {
@@ -76,8 +84,12 @@ function autoRestart() {
             statusEl.textContent = `It's ${currentPlayer}'s turn!`;
             playCells = Array(9).fill('');
             cells.forEach(cell => cell.textContent = '');
+            startNewGame();
             
         }, 5000);
+        
+        
+
 
         
     }
@@ -93,7 +105,6 @@ function checkWin () {
             playCells[b] === playCells[c]
           ) {
             statusEl.textContent = `Player ${currentPlayer} won! \n Click restart or wait 5 seconds to start a new game!`;
-            
             autoRestart();
             return true;
             
@@ -106,6 +117,7 @@ function checkWin () {
 function checkDraw () {
     if (playCells.every(cell => cell !== '') ) {
         statusEl.textContent = "It's a draw! \n Click restart or wait 5 seconds to start a new game!";
+       
         autoRestart();
         
         return true;
@@ -115,12 +127,7 @@ function checkDraw () {
 }
 
 
-restartBtn.addEventListener('click', () => {
-    isGameActive = true;
-    statusEl.textContent = `It's ${currentPlayer}'s turn!`;
-    playCells = Array(9).fill('');
-    cells.forEach(cell => cell.textContent = '');
+restartBtn.addEventListener('click', startNewGame);
     
 
 
-})
