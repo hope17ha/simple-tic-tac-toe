@@ -79,11 +79,7 @@ function startNewGame() {
 function autoRestart() {
     
         setTimeout(() => {
-            currentPlayer = 'X';
-            isGameActive = true;
-            statusEl.textContent = `It's ${currentPlayer}'s turn!`;
-            playCells = Array(9).fill('');
-            cells.forEach(cell => cell.textContent = '');
+            
             startNewGame();
             
         }, 5000);
