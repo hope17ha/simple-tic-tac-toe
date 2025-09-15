@@ -2,8 +2,27 @@ const boardEl = document.getElementById('board');
 const cells = document.querySelectorAll('.cell');
 const statusEl = document.getElementById('status');
 const restartBtn = document.getElementById('restart');
+const playerXBtn = document.getElementById('choose-x');
+const playerOBtn = document.getElementById('choose-o');
+const overlayEl = document.getElementById('symbol-choice-overlay');
 
-let currentPlayer = 'X';
+let currentPlayer;
+
+playerXBtn.addEventListener('click', () => {
+    currentPlayer = 'X';
+    overlayEl.classList.add('hidden');
+    statusEl.textContent = 'Player X starts!'
+});
+
+playerOBtn.addEventListener('click', () => {
+    currentPlayer = 'O';
+    overlayEl.classList.add('hidden');
+    statusEl.textContent = 'Player O starts!'
+});
+
+
+
+
 let playCells = [];
 let isGameActive = true;
 
@@ -47,6 +66,8 @@ cells.forEach(cell => {
   });
 });
 
+
+
 function autoRestart() {
     
         setTimeout(() => {
@@ -55,7 +76,10 @@ function autoRestart() {
             statusEl.textContent = `It's ${currentPlayer}'s turn!`;
             playCells = Array(9).fill('');
             cells.forEach(cell => cell.textContent = '');
-        }, 5000)
+            
+        }, 5000);
+
+        
     }
 
 
@@ -83,6 +107,7 @@ function checkDraw () {
     if (playCells.every(cell => cell !== '') ) {
         statusEl.textContent = "It's a draw! \n Click restart or wait 5 seconds to start a new game!";
         autoRestart();
+        
         return true;
     }
 
@@ -95,6 +120,7 @@ restartBtn.addEventListener('click', () => {
     statusEl.textContent = `It's ${currentPlayer}'s turn!`;
     playCells = Array(9).fill('');
     cells.forEach(cell => cell.textContent = '');
+    
 
 
 })
