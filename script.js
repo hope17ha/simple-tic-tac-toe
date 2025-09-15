@@ -70,8 +70,12 @@ function startNewGame() {
     isGameActive = true;
     statusEl.textContent = `Choose a player!`;
     playCells = Array(9).fill('');
-    cells.forEach(cell => cell.textContent = '');
+    cells.forEach(cell => {
+         cell.textContent = '';
+         cell.classList.remove('win');
+    });
     overlayEl.classList.remove('hidden');
+    cells.every(cell => cell.classList.remove('win'));
 }
 
 
@@ -93,6 +97,7 @@ function autoRestart() {
 
 function checkWin () {
     for (const combo of winningCombos) {
+        
         const [a,b,c] = combo;
         if (
             isGameActive === true &&
@@ -101,6 +106,13 @@ function checkWin () {
             playCells[b] === playCells[c]
           ) {
             statusEl.textContent = `Player ${currentPlayer} won! \n Click restart or wait 5 seconds to start a new game!`;
+            cells.forEach(cell => {
+                const index = Number(cell.dataset.index);
+                if (index === a || index === b || index === c){
+                    cell.classList.add('win');
+                }
+            })
+
             autoRestart();
             return true;
             
