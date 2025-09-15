@@ -47,6 +47,18 @@ cells.forEach(cell => {
   });
 });
 
+function autoRestart() {
+    
+        setTimeout(() => {
+            currentPlayer = 'X';
+            isGameActive = true;
+            statusEl.textContent = `It's ${currentPlayer}'s turn!`;
+            playCells = Array(9).fill('');
+            cells.forEach(cell => cell.textContent = '');
+        }, 5000)
+    }
+
+
 function checkWin () {
     for (const combo of winningCombos) {
         const [a,b,c] = combo;
@@ -56,9 +68,11 @@ function checkWin () {
             playCells[a] === playCells[b] &&
             playCells[b] === playCells[c]
           ) {
-            statusEl.textContent = `Player ${currentPlayer} won! \n Click restart to start a new game!`;
+            statusEl.textContent = `Player ${currentPlayer} won! \n Click restart or wait 5 seconds to start a new game!`;
             
+            autoRestart();
             return true;
+            
 
           }
     }
@@ -67,12 +81,14 @@ function checkWin () {
 
 function checkDraw () {
     if (playCells.every(cell => cell !== '') ) {
-        statusEl.textContent = "It's a draw!";
+        statusEl.textContent = "It's a draw! \n Click restart or wait 5 seconds to start a new game!";
+        autoRestart();
         return true;
     }
 
     return false;
 }
+
 
 restartBtn.addEventListener('click', () => {
     isGameActive = true;
